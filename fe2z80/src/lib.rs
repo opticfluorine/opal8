@@ -10,8 +10,7 @@
 /// "active" and "inactive", allowing the emulator and users
 /// to avoid worrying about whether a given pin is active-high
 /// or active-low.
-pub enum PinBistate
-{
+pub enum PinBistate {
     Active,
     Inactive,
 }
@@ -21,8 +20,7 @@ pub enum PinBistate
 /// "active" and "inactive", allowing the emulator and users
 /// to avoid worrying about whether a given pin is active-high
 /// or active-low.
-pub enum PinTristate
-{
+pub enum PinTristate {
     Active,
     Inactive,
     Other,
@@ -31,8 +29,7 @@ pub enum PinTristate
 /// Data type that describes the current state of the
 /// input signals. The clock pin is omitted since it is
 /// replaced by the `Emulator::on_clock` method instead.
-pub struct InputPins
-{
+pub struct InputPins {
     pub busreq: PinBistate,
     pub int: PinBistate,
     pub nmi: PinBistate,
@@ -42,8 +39,7 @@ pub struct InputPins
 
 /// Data type that describes the current state of the
 /// output pins.
-pub struct OutputPins
-{
+pub struct OutputPins {
     pub address_bus: u16,
     pub busack: PinBistate,
     pub halt: PinBistate,
@@ -57,16 +53,14 @@ pub struct OutputPins
 
 /// Data type that describes the current state of the
 /// input/output pins.
-pub struct InputOutputPins
-{
+pub struct InputOutputPins {
     pub data_bus: u8,
 }
 
 /// Split representation of a 16-bit register.
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub struct Register16HiLo
-{
+pub struct Register16HiLo {
     pub hi: u8,
     pub lo: u8,
 }
@@ -74,16 +68,14 @@ pub struct Register16HiLo
 /// Union type modeling a register pair that can be accessed
 /// as a single 16-bit register or two 8-bit registers.
 #[repr(C)]
-pub union Register16
-{
+pub union Register16 {
     pub hilo: Register16HiLo,
     pub full: u16,
 }
 
 /// Data type that describes the current state of all 22
 /// registers.
-pub struct Registers
-{
+pub struct Registers {
     pub a0: u8,
     pub f0: u8,
     pub a1: u8,
@@ -104,13 +96,9 @@ pub struct Registers
 
 /// Each instance of Emulator provides a single instance of
 /// the fe2z80 Z80 emulator.
-pub struct Emulator
-{
+pub struct Emulator {}
 
-}
-
-impl Emulator
-{
+impl Emulator {
     /// Causes the emulator to evaluate its next clock cycle,
     /// blocking until the cycle is complete.
     ///
@@ -119,11 +107,12 @@ impl Emulator
     /// * `output_pins` - (Out) Current output pin state.
     /// * `input_output_pins` - (In/Out) Current in/out pin state.
     /// * `registers` - (In/Out) Current registers state.
-    pub fn on_clock(input_pins: &InputPins,
+    pub fn on_clock(
+        input_pins: &InputPins,
         output_pins: &mut OutputPins,
         input_output_pins: &mut InputOutputPins,
-        registers: &mut Registers) {
-
+        registers: &mut Registers,
+    ) {
     }
 }
 
