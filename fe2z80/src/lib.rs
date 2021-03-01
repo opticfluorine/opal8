@@ -5,6 +5,8 @@
 //! aware and suitable for integration with a browser-based
 //! application.
 
+use array_init;
+
 /// Describes the current state of a bistate pin. The details
 /// of "high" vs "low" are abstracted away here in favor of
 /// "active" and "inactive", allowing the emulator and users
@@ -98,11 +100,11 @@ mod mmu;
 
 /// Each instance of Emulator provides a single instance of
 /// the fe2z80 Z80 emulator.
-pub struct Emulator {
-    memory_pages: mmu::PageArray,
+pub struct Emulator<'a> {
+    memory_pages: mmu::PageArray<'a>,
 }
 
-impl Emulator {
+impl Emulator<'_> {
     /// Causes the emulator to evaluate its next clock cycle,
     /// blocking until the cycle is complete.
     ///
@@ -121,6 +123,8 @@ impl Emulator {
 }
 
 /// Creates and returns a new emulator instance.
-pub fn create_emulator() -> Emulator {
-    Emulator {}
+pub fn create_emulator<'a>() -> Emulator<'a> {
+    Emulator {
+        memory_pages: array_init::array_init(|_| None),
+    }
 }
