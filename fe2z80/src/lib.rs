@@ -104,7 +104,7 @@ pub struct Emulator<'a> {
     memory_pages: mmu::PageArray<'a>,
 }
 
-impl Emulator<'_> {
+impl<'a> Emulator<'a> {
     /// Causes the emulator to evaluate its next clock cycle,
     /// blocking until the cycle is complete.
     ///
@@ -114,11 +114,29 @@ impl Emulator<'_> {
     /// * `input_output_pins` - (In/Out) Current in/out pin state.
     /// * `registers` - (In/Out) Current registers state.
     pub fn on_clock(
+        &mut self,
         input_pins: &InputPins,
         output_pins: &mut OutputPins,
         input_output_pins: &mut InputOutputPins,
         registers: &mut Registers,
     ) {
+    }
+
+    /// Updates the entire memory layout for the emulator.
+    ///
+    /// # Arguments
+    /// * `memory_pages` - (In) New set of memory pages.
+    pub fn set_memory_layout(&mut self, memory_pages: mmu::PageArray<'a>) {
+        self.memory_pages = memory_pages;
+    }
+
+    /// Updates a single page of the memory layout.
+    ///
+    /// # Arguments
+    /// * `page_index` - (In) Memory page index to update.
+    /// * `memory_page` - (In) New memory page.
+    pub fn set_memory_page(&mut self, page_index: u8, memory_page: Option<mmu::Memory<'a>>) {
+        self.memory_pages[page_index as usize] = memory_page;
     }
 }
 
