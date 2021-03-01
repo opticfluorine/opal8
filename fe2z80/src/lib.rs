@@ -94,9 +94,13 @@ pub struct Registers {
     pub hl1: Register16,
 }
 
+mod mmu;
+
 /// Each instance of Emulator provides a single instance of
 /// the fe2z80 Z80 emulator.
-pub struct Emulator {}
+pub struct Emulator {
+    memory_pages: mmu::PageArray,
+}
 
 impl Emulator {
     /// Causes the emulator to evaluate its next clock cycle,
